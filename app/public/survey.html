@@ -214,7 +214,7 @@
 		  $('.optradio').each(function() {
 		  	if( $(this).val() === NaN)
 		  		isValid = false
-		  })
+		  });
 		  return isValid;
 		}
 		// If all required fields are filled
@@ -223,60 +223,70 @@
 	    	var userData = {
 	    		name: $("#name").val(),
 	    		photo: $("#photo").val(),
-	    		scores: [parseInt($("input[name=optradio1]:checked").val()), parseInt($("input[name=optradio2]:checked").val()), parseInt($("input[name=optradio3]:checked").val()), parseInt($("input[name=optradio4]:checked").val()), parseInt($("input[name=optradio5]:checked").val()), parseInt($("input[name=optradio6]:checked").val()), parseInt($("input[name=optradio7]:checked").val()), parseInt($("input[name=optradio8]:checked").val()), parseInt($("input[name=optradio9]:checked").val()), parseInt($("input[name=optradio10]:checked").val()), ]}
-	    	console.log(userData);
-	    
+	    		scores: [parseInt($("input[name=optradio1]:checked").val()), parseInt($("input[name=optradio2]:checked").val()), parseInt($("input[name=optradio3]:checked").val()), parseInt($("input[name=optradio4]:checked").val()), parseInt($("input[name=optradio5]:checked").val()), parseInt($("input[name=optradio6]:checked").val()), parseInt($("input[name=optradio7]:checked").val()), parseInt($("input[name=optradio8]:checked").val()), parseInt($("input[name=optradio9]:checked").val()), parseInt($("input[name=optradio10]:checked").val())]}
+	    	
+		
     	// Grab the URL of the website
 	    	var currentURL = window.location.origin;
-	    	
-	    	// AJAX post the data to the friends API. 
-	    	$.post(currentURL + "/api/friends", userData, function(data){
-		});
-		// Grab the result from the AJAX post so that the best match's name and photo are displayed.
-	    		var resultArray = []
-			    //Information on matched user.
-			    var matchName;
-			    var matchImage;
+
+	       // AJAX post the data to the friends API. 
+	   //  	$.post(currentURL + "/api/friends", userData, function(data){
+
+				// console.log(userData);
+		
+	   //  	});	
+			//Defining variables for matching caluclations  
+			var resultArray =[];
+		    var matchName;
+		    var matchImg;
 			    //API call to friends.js
-			    $.get(currentURL + "/api/friends", function(data){
-			    	for (var i = 0; i < data.length; i++) {
-			    		console.log(userData.scores);
-			    		console.log(data[i].scores);
-			    		compareMatches(userData.scores, data[i].scores);
-			    	}
+			$.get(currentURL + "/api/friends", function(data){
+			  
+			    console.log(userData.scores);
+			    for (var i = 0; i < data.length; i++) {
+			    	console.log(data[i].scores);
+			    	compareMatches(userData.scores, data[i].scores);
+			   	}
 			    	//When all comparison calculations are complete, find the best match.
 			    	if (resultArray.length == data.length) {
+			    		console.log(data.length);
 			    		var indexOfMatch = resultArray.indexOf(Math.min.apply(Math, resultArray));
+			    		console.log(indexOfMatch);
 			    		matchName = data[indexOfMatch].name;
-			    		matchImage = data[indexOfMatch].image;
+			    		matchImage = data[indexOfMatch].photo;
 			    		console.log(data[indexOfMatch]);
-			    		displayModal();
+			    		
+			    		$("#matchName").text(matchName);
+						$("#matchImg").attr("src", data[indexOfMatch].photo);
+						$("#resultsModal").modal();
 			    	}
-			   	 })
+			   	 });
+			    
 			    //Comparison calculation to find all results.
-			    function compareMatches(arr1, arr2) {
+				function compareMatches(arr1, arr2) {
 					var diff = 0;
 					for (var i = 0; i < arr1.length; i++) {
 						var num =  Math.abs(arr1[i] - arr2[i]);
 						diff += num;
 					}
 					resultArray.push(diff);
+					console.log(resultArray);
 				}
+				
 				//Display modal with information on match.
-				function displayModal() {
-					$("#user-name").text(userData.name);
-					$("#match-name").text(matchName);
-					$("#match-img").attr("src", matchImage);
-					$("#myModal").modal();
-				}
-		    	}
-		else
-		{
-			alert("Please fill out all fields before submitting!");
-		}
-    	
-    	return false;
-    });	
+					function displayModal() {
+						$("#matchName").text(matchName);
+						$("#matchImg").attr("src", data[indexOfMatch].photo);
+						$("#resultsModal").modal();
+					}
+
+
+	    	 } else {
+	    		alert("Please fill out all fields before submitting!");
+	   		 }
+
+	   		 return false;
+	    });
 	</script>
 
 
