@@ -1,7 +1,7 @@
 {
-  "name": "friend-finder",
+  "name": "FriendFinder",
   "version": "1.0.0",
-  "description": "",
+  "description": "Application that matches a user to a friend with similar personalities after answering a series of questions #Week of 13 HW: Friend Finder - Node and Express Servers",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -15,15 +15,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arcyflores/FriendFinder.git"
+    "url": "git+https://github.com/ArcyFlores/FriendFinder.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
-}, 
-{
-  "engines":{
-    "node":"4.1.1"
-  }
-  
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArcyFlores/FriendFinder/issues"
+  },
+  "homepage": "https://github.com/ArcyFlores/FriendFinder#readme"
 }

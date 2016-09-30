@@ -229,12 +229,6 @@
     	// Grab the URL of the website
 	    	var currentURL = window.location.origin;
 
-	       // AJAX post the data to the friends API. 
-	   //  	$.post(currentURL + "/api/friends", userData, function(data){
-
-				// console.log(userData);
-		
-	   //  	});	
 			//Defining variables for matching caluclations  
 			var resultArray =[];
 		    var matchName;
@@ -261,6 +255,13 @@
 						$("#resultsModal").modal();
 			    	}
 			   	 });
+
+				// AJAX post the data to the friends API. 
+		    	$.post(currentURL + "/api/friends", userData, function(data){
+
+					console.log(userData);
+			
+		    	});	
 			    
 			    //Comparison calculation to find all results.
 				function compareMatches(arr1, arr2) {
